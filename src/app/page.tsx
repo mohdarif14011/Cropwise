@@ -137,33 +137,24 @@ function MyFieldCard({ crop }: { crop: Crop }) {
   const latestHealth = crop.historicalData[crop.historicalData.length - 1]?.health || 0;
   
   const getHealthColor = (health: number) => {
-    if (health < 50) return 'bg-red-500';
-    if (health < 80) return 'bg-yellow-500';
-    return 'bg-green-500';
+    if (health < 50) return 'text-red-500';
+    if (health < 80) return 'text-yellow-500';
+    return 'text-green-500';
   };
 
   return (
     <Link href={`/crops/${crop.id}`}>
-      <Card className="overflow-hidden rounded-2xl shadow-lg">
-        <div className="relative h-40 w-full">
-          <Image
-            src={crop.imageUrl}
-            alt={crop.name}
-            fill
-            className="object-cover"
-            data-ai-hint="field aerial view"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        </div>
-        <CardContent className="p-4 bg-card">
-          <h3 className="font-bold text-lg">Tuscan Sun Vineyard</h3>
-          <p className="text-sm text-muted-foreground">{crop.name} - {crop.variety}</p>
-          <div className="mt-3">
-            <div className="flex justify-between items-center mb-1">
-                <span className="text-xs font-medium text-muted-foreground">Overall Health</span>
-                <span className={`text-sm font-bold ${getHealthColor(latestHealth).replace('bg-', 'text-')}`}>{latestHealth}%</span>
+      <Card className="rounded-2xl shadow-lg">
+        <CardContent className="p-4">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-bold text-lg">Tuscan Sun Vineyard</h3>
+              <p className="text-sm text-muted-foreground">{crop.name} - {crop.variety}</p>
             </div>
-            <Progress value={latestHealth} indicatorClassName={getHealthColor(latestHealth)} />
+            <div className="text-right">
+                <p className="text-xs text-muted-foreground">Overall Health</p>
+                <p className={`text-2xl font-bold ${getHealthColor(latestHealth)}`}>{latestHealth}%</p>
+            </div>
           </div>
         </CardContent>
       </Card>

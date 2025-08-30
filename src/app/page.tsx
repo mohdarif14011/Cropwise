@@ -19,15 +19,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-const commodities = [
-  { name: 'Rice', image: 'https://picsum.photos/100/100?random=1' },
-  { name: 'Corn', image: 'https://picsum.photos/100/100?random=2' },
-  { name: 'Grapes', image: 'https://picsum.photos/100/100?random=3' },
-  { name: 'Potato', image: 'https://picsum.photos/100/100?random=4' },
-  { name: 'Olive', image: 'https://picsum.photos/100/100?random=5' },
-  { name: 'Tomato', image: 'https://picsum.photos/100/100?random=6' },
-];
-
 export default function MobileHomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-body flex flex-col">
@@ -103,27 +94,6 @@ export default function MobileHomePage() {
         </Card>
 
         <section>
-          <h2 className="text-xl font-bold mb-3">Commodities and Food</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-2 -mx-4 px-4">
-            {commodities.map((item) => (
-              <div key={item.name} className="flex-shrink-0 text-center">
-                <div className="w-16 h-16 rounded-xl bg-card shadow-md p-1">
-                    <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={60}
-                    height={60}
-                    className="object-cover rounded-lg w-full h-full"
-                    data-ai-hint={`${item.name.toLowerCase()} commodity`}
-                    />
-                </div>
-                <span className="text-sm mt-2 block">{item.name}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section>
           <h2 className="text-xl font-bold mb-3">My Fields</h2>
           <Card className="overflow-hidden rounded-2xl shadow-lg">
             <div className="relative h-48 w-full">
@@ -134,6 +104,9 @@ export default function MobileHomePage() {
                 className="object-cover"
                 data-ai-hint="field aerial view"
               />
+               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                <h3 className="text-white text-lg font-bold">Tuscan Sun Vineyard</h3>
+              </div>
             </div>
           </Card>
         </section>

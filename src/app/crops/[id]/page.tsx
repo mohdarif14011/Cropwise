@@ -7,6 +7,7 @@ import InsightsSection from '@/components/crop-details/insights-section';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SensorDataSection from '@/components/crop-details/sensor-data-section';
 
 export default function CropDetailPage({ params }: { params: { id: string } }) {
   const crop = getCropById(params.id);
@@ -58,6 +59,8 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
             <HistoricalDataChart data={crop.historicalData} />
           </CardContent>
         </Card>
+
+        <SensorDataSection data={crop.sensorData} />
 
       </main>
     </div>

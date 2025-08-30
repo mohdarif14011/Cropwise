@@ -11,6 +11,22 @@ export type HistoricalDataPoint = {
   health: number; // 0-100 scale
 };
 
+export type SensorData = {
+  soilMoisture: number; // percentage
+  soilTemperature: number; // Celsius
+  phLevel: number;
+  electricalConductivity: number; // mS/cm
+  nitrogen: number; // ppm
+  phosphorus: number; // ppm
+  potassium: number; // ppm
+  urea: number; // ppm
+  nitrate: number; // ppm
+  ammonium: number; // ppm
+  tds: number; // ppm
+  co2: number; // ppm
+  soilCompaction: number; // kPa
+};
+
 export type Crop = {
   id: string;
   name: string;
@@ -19,4 +35,5 @@ export type Crop = {
   lastUpdated: string;
   insights: Insight;
   historicalData: HistoricalDataPoint[];
+  sensorData: SensorData;
 };

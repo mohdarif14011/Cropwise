@@ -24,28 +24,16 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import AddFieldDialog from '@/components/add-field-dialog';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getWeather, type WeatherData } from '@/ai/flows/get-weather-flow';
 import { Skeleton } from '@/components/ui/skeleton';
 
-function WeatherCard() {
-    const [weather, setWeather] = useState<WeatherData | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+interface WeatherCardProps {
+    weather: WeatherData | null;
+    isLoading: boolean;
+}
 
-    useEffect(() => {
-        async function fetchWeather() {
-            try {
-                setIsLoading(true);
-                const weatherData = await getWeather({ location: 'Chianti Hills' });
-                setWeather(weatherData);
-            } catch (error) {
-                console.error("Failed to fetch weather", error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        fetchWeather();
-    }, []);
+function WeatherCard({ weather, isLoading }: WeatherCardProps) {
 
     if (isLoading) {
         return <WeatherCardSkeleton />;
@@ -143,6 +131,25 @@ function WeatherCardSkeleton() {
 
 
 export default function MobileHomePage() {
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchWeather = useCallback(async () => {
+    try {
+        setIsLoading(true);
+        const weatherData = await getWeather({ location: 'Chianti Hills' });
+        setWeather(weatherData);
+    } catch (error) {
+        console.error("Failed to fetch weather", error);
+    } finally {
+        setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchWeather();
+  }, [fetchWeather]);
+
   return (
     <div className="min-h-screen bg-background text-foreground font-body flex flex-col">
       <header className="bg-primary text-primary-foreground p-6 rounded-b-3xl">
@@ -154,8 +161,8 @@ export default function MobileHomePage() {
               <ChevronDown className="h-4 w-4" />
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30">
-            <RefreshCw className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="rounded-full bg-white/20 hover:bg-white/30" onClick={fetchWeather}>
+            <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
         </div>
         <div className="relative">
@@ -169,7 +176,7 @@ export default function MobileHomePage() {
       </header>
 
       <main className="flex-1 p-4 space-y-6">
-        <WeatherCard />
+        <WeatherCard weather={weather} isLoading={isLoading} />
 
         <section>
           <h2 className="text-xl font-bold mb-3">My Fields</h2>

@@ -1,6 +1,5 @@
 import { getCropById } from '@/lib/mock-data';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import HistoricalDataChart from '@/components/crop-details/historical-data-chart';
 import InsightsSection from '@/components/crop-details/insights-section';
@@ -35,20 +34,6 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
        </header>
 
       <main className="flex-1 p-4 space-y-6">
-        <Card className="rounded-2xl overflow-hidden shadow-lg">
-          <CardContent className="p-0">
-            <div className="relative aspect-video w-full">
-              <Image
-                src={crop.imageUrl}
-                alt={crop.name}
-                fill
-                className="object-cover"
-                data-ai-hint={`${crop.name.toLowerCase()} crop`}
-              />
-            </div>
-          </CardContent>
-        </Card>
-
         <InsightsSection insights={crop.insights} />
 
         <Card className="rounded-2xl shadow-lg">

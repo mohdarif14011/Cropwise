@@ -1,3 +1,6 @@
+
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -21,6 +24,123 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import AddFieldDialog from '@/components/add-field-dialog';
+import { useEffect, useState } from 'react';
+import { getWeather, type WeatherData } from '@/ai/flows/get-weather-flow';
+import { Skeleton } from '@/components/ui/skeleton';
+
+function WeatherCard() {
+    const [weather, setWeather] = useState<WeatherData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchWeather() {
+            try {
+                setIsLoading(true);
+                const weatherData = await getWeather({ location: 'Chianti Hills' });
+                setWeather(weatherData);
+            } catch (error) {
+                console.error("Failed to fetch weather", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchWeather();
+    }, []);
+
+    if (isLoading) {
+        return <WeatherCardSkeleton />;
+    }
+
+    if (!weather) {
+        return null; // Or show an error state
+    }
+
+    return (
+        <Card className="shadow-lg rounded-2xl -mt-16 z-10 relative">
+            <CardContent className="p-4">
+            <div className="flex justify-between items-start mb-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-muted-foreground" />
+                <span className="font-semibold">{weather.locationName}</span>
+              </div>
+              <div className="flex items-center">
+                <Cloud className="h-8 w-8 text-blue-400 mr-2" />
+                <span className="text-4xl font-bold">+{weather.temperature}°C</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-4 gap-2 text-center text-sm my-4">
+              <div className="flex flex-col items-center">
+                <Thermometer className="h-5 w-5 text-red-500 mb-1" />
+                <span className="font-semibold">+{weather.soilTemperature}°C</span>
+                <span className="text-muted-foreground text-xs">Soil temp</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <Droplets className="h-5 w-5 text-blue-500 mb-1" />
+                <span className="font-semibold">{weather.humidity}%</span>
+                <span className="text-muted-foreground text-xs">Humidity</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <Wind className="h-5 w-5 text-gray-500 mb-1" />
+                <span className="font-semibold">{weather.windSpeed} m/s</span>
+                <span className="text-muted-foreground text-xs">Wind</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <CloudRain className="h-5 w-5 text-gray-400 mb-1" />
+                <span className="font-semibold">{weather.precipitation} mm</span>
+                <span className="text-muted-foreground text-xs">Precipition</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">{weather.sunrise}</span>
+              <div className="w-full h-px bg-gray-200 border-dashed mx-4"></div>
+              <span className="text-muted-foreground">{weather.sunset}</span>
+            </div>
+             <div className="text-xs text-center text-muted-foreground mt-1">
+                <span>Sunrise & Sunset</span>
+            </div>
+          </CardContent>
+        </Card>
+    );
+}
+
+function WeatherCardSkeleton() {
+    return (
+        <Card className="shadow-lg rounded-2xl -mt-16 z-10 relative">
+            <CardContent className="p-4">
+                 <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5 text-muted-foreground" />
+                        <Skeleton className="h-5 w-24" />
+                    </div>
+                    <div className="flex items-center">
+                        <Cloud className="h-8 w-8 text-blue-400 mr-2" />
+                        <Skeleton className="h-10 w-16" />
+                    </div>
+                 </div>
+                 <div className="grid grid-cols-4 gap-2 text-center text-sm my-4">
+                    {[...Array(4)].map((_, i) => (
+                         <div key={i} className="flex flex-col items-center space-y-1">
+                            <Skeleton className="h-5 w-5 rounded-full" />
+                            <Skeleton className="h-4 w-8" />
+                            <Skeleton className="h-3 w-12" />
+                        </div>
+                    ))}
+                 </div>
+                 <div className="flex items-center justify-between text-sm">
+                    <Skeleton className="h-4 w-12" />
+                    <div className="w-full h-px bg-gray-200 border-dashed mx-4"></div>
+                    <Skeleton className="h-4 w-12" />
+                </div>
+                <div className="text-xs text-center text-muted-foreground mt-1">
+                    <Skeleton className="h-3 w-24 mx-auto" />
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
+
 
 export default function MobileHomePage() {
   return (
@@ -49,52 +169,7 @@ export default function MobileHomePage() {
       </header>
 
       <main className="flex-1 p-4 space-y-6">
-        <Card className="shadow-lg rounded-2xl -mt-16 z-10 relative">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start mb-2">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-muted-foreground" />
-                <span className="font-semibold">Chianti Hills</span>
-              </div>
-              <div className="flex items-center">
-                <Cloud className="h-8 w-8 text-blue-400 mr-2" />
-                <span className="text-4xl font-bold">+16°C</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 gap-2 text-center text-sm my-4">
-              <div className="flex flex-col items-center">
-                <Thermometer className="h-5 w-5 text-red-500 mb-1" />
-                <span className="font-semibold">+22°C</span>
-                <span className="text-muted-foreground text-xs">Soil temp</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Droplets className="h-5 w-5 text-blue-500 mb-1" />
-                <span className="font-semibold">59%</span>
-                <span className="text-muted-foreground text-xs">Humidity</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <Wind className="h-5 w-5 text-gray-500 mb-1" />
-                <span className="font-semibold">6 m/s</span>
-                <span className="text-muted-foreground text-xs">Wind</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <CloudRain className="h-5 w-5 text-gray-400 mb-1" />
-                <span className="font-semibold">0 mm</span>
-                <span className="text-muted-foreground text-xs">Precipition</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">5:25 am</span>
-              <div className="w-full h-px bg-gray-200 border-dashed mx-4"></div>
-              <span className="text-muted-foreground">8:04 pm</span>
-            </div>
-             <div className="text-xs text-center text-muted-foreground mt-1">
-                <span>Sunrise & Sunset</span>
-            </div>
-          </CardContent>
-        </Card>
+        <WeatherCard />
 
         <section>
           <h2 className="text-xl font-bold mb-3">My Fields</h2>

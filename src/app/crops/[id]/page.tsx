@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import HistoricalDataChart from '@/components/crop-details/historical-data-chart';
-import CropDetailsClient from '@/components/crop-details/crop-details-client';
+import InsightsSection from '@/components/crop-details/insights-section';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -60,7 +60,7 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
             </Card>
           </div>
           <div className="lg:col-span-3">
-             <CropDetailsClient initialInsights={crop.insights} />
+             <InsightsSection insights={crop.insights} />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 import type { Insight } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Droplets, Package, Shield, Bell } from 'lucide-react';
+import { Droplets, Package, Shield, Bell, Tractor } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -74,6 +74,12 @@ export default function InsightsSection({ insights }: InsightsSectionProps) {
           title="Pest Control"
         >
           {insights.pestControlRecommendation}
+        </InsightCard>
+         <InsightCard
+          icon={<Tractor className="h-5 w-5 text-green-600" />}
+          title="Ploughing"
+        >
+          {insights.ploughingRecommendation}
         </InsightCard>
       </CardContent>
     </Card>

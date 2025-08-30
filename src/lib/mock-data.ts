@@ -11,6 +11,7 @@ export const mockCrops: Crop[] = [
       irrigationRecommendation: 'Water every 2-3 days, ensuring deep soil moisture. Increase frequency during pollination.',
       fertilizationRecommendation: 'Apply a balanced NPK fertilizer (10-10-10) at planting. Sidedress with nitrogen when plants are knee-high.',
       pestControlRecommendation: 'Monitor for corn earworms. Apply mineral oil to silks or use Bacillus thuringiensis (Bt) if necessary.',
+      ploughingRecommendation: 'Standard ploughing depth of 6-8 inches is recommended before planting to ensure good root development.',
     },
     historicalData: [
       { date: '2024-07-01', temperature: 25, humidity: 60, health: 85 },
@@ -45,6 +46,7 @@ export const mockCrops: Crop[] = [
       irrigationRecommendation: 'Provide consistent watering, about 1-1.5 inches per week. Avoid overhead watering to prevent fungal diseases.',
       fertilizationRecommendation: 'Use a low-nitrogen, high-phosphorus fertilizer (e.g., 5-10-5) when transplanting and as fruit begins to form.',
       pestControlRecommendation: 'Check for hornworms and aphids. Handpick hornworms or use neem oil for aphids.',
+      ploughingRecommendation: 'Deep ploughing to 12 inches is beneficial for tomato root systems. Incorporate compost during ploughing.',
     },
     historicalData: [
       { date: '2024-07-01', temperature: 24, humidity: 70, health: 80 },
@@ -79,6 +81,7 @@ export const mockCrops: Crop[] = [
       irrigationRecommendation: 'Keep soil consistently moist but not waterlogged. Light, frequent watering is best for shallow roots.',
       fertilizationRecommendation: 'Feed with a balanced liquid fertilizer (e.g., 10-10-10) every 2-3 weeks.',
       pestControlRecommendation: 'Watch for slugs and aphids. Use beer traps for slugs and insecticidal soap for aphids.',
+      ploughingRecommendation: 'Shallow ploughing (4-6 inches) is sufficient for lettuce. Avoid deep tilling to protect shallow roots.',
     },
     historicalData: [
         { date: '2024-07-01', temperature: 20, humidity: 75, health: 90 },

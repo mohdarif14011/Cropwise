@@ -2,6 +2,7 @@ export type Insight = {
   irrigationRecommendation: string;
   fertilizationRecommendation: string;
   pestControlRecommendation: string;
+  ploughingRecommendation: string;
 };
 
 export type HistoricalDataPoint = {

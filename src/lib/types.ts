@@ -11,20 +11,26 @@ export type HistoricalDataPoint = {
   health: number; // 0-100 scale
 };
 
+export type SensorValue = {
+  current: number;
+  min: number;
+  max: number;
+};
+
 export type SensorData = {
-  soilMoisture: number; // percentage
-  soilTemperature: number; // Celsius
-  phLevel: number;
-  electricalConductivity: number; // mS/cm
-  nitrogen: number; // ppm
-  phosphorus: number; // ppm
-  potassium: number; // ppm
-  urea: number; // ppm
-  nitrate: number; // ppm
-  ammonium: number; // ppm
-  tds: number; // ppm
-  co2: number; // ppm
-  soilCompaction: number; // kPa
+  soilMoisture: SensorValue; // percentage
+  soilTemperature: SensorValue; // Celsius
+  phLevel: SensorValue;
+  electricalConductivity: SensorValue; // mS/cm
+  nitrogen: SensorValue; // ppm
+  phosphorus: SensorValue; // ppm
+  potassium: SensorValue; // ppm
+  urea: SensorValue; // ppm
+  nitrate: SensorValue; // ppm
+  ammonium: SensorValue; // ppm
+  tds: SensorValue; // ppm
+  co2: SensorValue; // ppm
+  soilCompaction: SensorValue; // kPa
 };
 
 export type Crop = {

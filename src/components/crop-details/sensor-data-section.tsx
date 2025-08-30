@@ -1,22 +1,62 @@
-import type { SensorData } from '@/lib/types';
+import type { SensorData, SensorValue } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress';
 
 interface SensorDataSectionProps {
   data: SensorData;
 }
 
-const DataRow = ({ label, value, unit }: { label: string; value: React.ReactNode; unit?: string }) => (
-    <>
-        <div className="flex justify-between items-center py-3">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-medium">
-            {value} {unit}
-        </span>
+const getStatusColor = (current: number, min: number, max: number): string => {
+  if (current < min || current > max) {
+    return 'bg-red-500'; // Out of range
+  }
+  return 'bg-green-500'; // Within range
+};
+
+const DataRow = ({ label, value, unit }: { label: string; value: SensorValue; unit?: string }) => {
+    const progressValue = ((value.current - value.min) / (value.max - value.min)) * 100;
+
+    return (
+        <div className="py-3 space-y-2">
+            <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">{label}</span>
+                <div className="flex items-center gap-2">
+                    <span className="font-semibold">{value.current} {unit}</span>
+                    <span className="text-xs text-muted-foreground">({value.min}-{value.max} {unit})</span>
+                </div>
+            </div>
+            <Progress value={progressValue} indicatorClassName={getStatusColor(value.current, value.min, value.max)}/>
         </div>
-        <Separator />
-    </>
-);
+    )
+};
+
+const NPKRow = ({ n, p, k }: { n: SensorValue; p: SensorValue; k: SensorValue }) => {
+    return (
+        <div className="py-3 space-y-2">
+            <div className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">NPK Ratio</span>
+                 <div className="flex items-center gap-2">
+                    <span className="font-semibold">{`${n.current}-${p.current}-${k.current}`}</span>
+                    <span className="text-xs text-muted-foreground">(ppm)</span>
+                </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+                <div>
+                    <p className="text-xs text-center text-muted-foreground">N ({n.min}-{n.max})</p>
+                    <Progress value={((n.current - n.min) / (n.max - n.min)) * 100} indicatorClassName={getStatusColor(n.current, n.min, n.max)} />
+                </div>
+                <div>
+                    <p className="text-xs text-center text-muted-foreground">P ({p.min}-{p.max})</p>
+                    <Progress value={((p.current - p.min) / (p.max - p.min)) * 100} indicatorClassName={getStatusColor(p.current, p.min, p.max)} />
+                </div>
+                 <div>
+                    <p className="text-xs text-center text-muted-foreground">K ({k.min}-{k.max})</p>
+                    <Progress value={((k.current - k.min) / (k.max - k.min)) * 100} indicatorClassName={getStatusColor(k.current, k.min, k.max)} />
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function SensorDataSection({ data }: SensorDataSectionProps) {
   return (
@@ -24,18 +64,18 @@ export default function SensorDataSection({ data }: SensorDataSectionProps) {
       <CardHeader>
         <CardTitle>Live Sensor Data</CardTitle>
       </CardHeader>
-      <CardContent className="text-sm">
-        <div className="space-y-1">
+      <CardContent className="divide-y divide-border">
             <DataRow label="Soil Moisture" value={data.soilMoisture} unit="%" />
             <DataRow label="Soil Temperature" value={data.soilTemperature} unit="°C" />
             <DataRow label="pH Level" value={data.phLevel} />
-            <DataRow label="Electrical Conductivity (EC)" value={data.electricalConductivity} unit="mS/cm" />
-            <DataRow label="Nitrogen, Phosphorus, Potassium" value={`${data.nitrogen}-${data.phosphorus}-${data.potassium}`} unit="ppm" />
-            <DataRow label="Urea, Nitrate, Ammonium" value={`${data.urea}/${data.nitrate}/${data.ammonium}`} unit="ppm" />
+            <DataRow label="Electrical Conductivity" value={data.electricalConductivity} unit="mS/cm" />
+            <NPKRow n={data.nitrogen} p={data.phosphorus} k={data.potassium} />
+            <DataRow label="Urea" value={data.urea} unit="ppm" />
+            <DataRow label="Nitrate" value={data.nitrate} unit="ppm" />
+            <DataRow label="Ammonium" value={data.ammonium} unit="ppm" />
             <DataRow label="TDS (Salinity)" value={data.tds} unit="ppm" />
             <DataRow label="CO₂ (Soil Respiration)" value={data.co2} unit="ppm" />
             <DataRow label="Soil Compaction" value={data.soilCompaction} unit="kPa" />
-        </div>
       </CardContent>
     </Card>
   );

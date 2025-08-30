@@ -98,20 +98,22 @@ export default function MobileHomePage() {
 
         <section>
           <h2 className="text-xl font-bold mb-3">My Fields</h2>
-          <Card className="overflow-hidden rounded-2xl shadow-lg">
-            <div className="relative h-48 w-full">
-              <Image
-                src="https://picsum.photos/600/300"
-                alt="My Field"
-                fill
-                className="object-cover"
-                data-ai-hint="field aerial view"
-              />
-               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                <h3 className="text-white text-lg font-bold">Tuscan Sun Vineyard</h3>
-              </div>
-            </div>
-          </Card>
+           <Link href="/crops/tomato-1">
+              <Card className="overflow-hidden rounded-2xl shadow-lg">
+                <div className="relative h-48 w-full">
+                  <Image
+                    src="https://picsum.photos/600/300"
+                    alt="My Field"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="field aerial view"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                    <h3 className="text-white text-lg font-bold">Tuscan Sun Vineyard</h3>
+                  </div>
+                </div>
+              </Card>
+           </Link>
         </section>
       </main>
 

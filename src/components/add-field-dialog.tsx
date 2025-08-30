@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -21,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { QrCode } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function AddFieldDialog({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,9 +43,11 @@ export default function AddFieldDialog({ children }: { children: React.ReactNode
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="flex justify-center">
-             <Button variant="outline" className="w-full flex items-center gap-2">
-                <QrCode className="h-5 w-5" />
-                <span>Scan QR Code</span>
+             <Button variant="outline" className="w-full flex items-center gap-2" asChild>
+                <Link href="/scan-qr">
+                    <QrCode className="h-5 w-5" />
+                    <span>Scan QR Code</span>
+                </Link>
             </Button>
           </div>
 

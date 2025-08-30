@@ -15,10 +15,12 @@ import {
   ShoppingBasket,
   Briefcase,
   Newspaper,
+  Plus,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import AddFieldDialog from '@/components/add-field-dialog';
 
 export default function MobileHomePage() {
   return (
@@ -112,6 +114,17 @@ export default function MobileHomePage() {
           </Card>
         </section>
       </main>
+
+      <div className="sticky bottom-20 right-4 self-end z-20">
+         <AddFieldDialog>
+            <Button
+                size="icon"
+                className="rounded-full h-14 w-14 bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg"
+            >
+                <Plus className="h-8 w-8" />
+            </Button>
+         </AddFieldDialog>
+      </div>
 
       <footer className="sticky bottom-0 px-6 pb-4 z-20">
         <div className="flex justify-around items-center bg-gray-900 text-white h-16 rounded-full shadow-lg">

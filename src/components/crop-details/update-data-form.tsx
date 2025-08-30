@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
 import { getNewInsights, type FormState } from '@/app/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -34,7 +35,7 @@ interface UpdateDataFormProps {
 
 export default function UpdateDataForm({ onNewInsights }: UpdateDataFormProps) {
   const initialState: FormState = { message: '', insights: null, fieldErrors: {} };
-  const [state, formAction] = useFormState(getNewInsights, initialState);
+  const [state, formAction] = useActionState(getNewInsights, initialState);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

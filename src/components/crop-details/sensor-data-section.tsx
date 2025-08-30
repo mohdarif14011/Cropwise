@@ -8,9 +8,18 @@ interface SensorDataSectionProps {
 
 const getStatusColor = (current: number, min: number, max: number): string => {
   if (current < min || current > max) {
-    return 'bg-red-500'; // Out of range
+    return 'bg-destructive'; // Red for out of range
   }
-  return 'bg-green-500'; // Within range
+
+  const range = max - min;
+  const lowerYellowBound = min + range * 0.25;
+  const upperYellowBound = max - range * 0.25;
+
+  if (current >= lowerYellowBound && current <= upperYellowBound) {
+    return 'bg-green-500'; // Green for optimal range
+  }
+
+  return 'bg-yellow-500'; // Yellow for acceptable range
 };
 
 const DataRow = ({ label, value, unit }: { label: string; value: SensorValue; unit?: string }) => {

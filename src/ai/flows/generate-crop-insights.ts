@@ -17,9 +17,14 @@ const GenerateCropInsightsInputSchema = z.object({
     .describe(
       "A photo of the crop, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
-  environmentalData: z
-    .string()
-    .describe('The environmental data including humidity, temperature, etc.'),
+  temperature: z.number().describe('The current temperature in Celsius.'),
+  humidity: z.number().describe('The current humidity percentage.'),
+  ph: z.number().describe('The pH level of the soil.'),
+  soilMoisture: z.number().describe('The soil moisture percentage.'),
+  co2: z.number().describe('The CO2 level in ppm.'),
+  nitrogen: z.number().describe('The Nitrogen (N) level in the soil.'),
+  phosphorus: z.number().describe('The Phosphorus (P) level in the soil.'),
+  potassium: z.number().describe('The Potassium (K) level in the soil.'),
 });
 export type GenerateCropInsightsInput = z.infer<typeof GenerateCropInsightsInputSchema>;
 
@@ -48,17 +53,26 @@ const prompt = ai.definePrompt({
   output: {schema: GenerateCropInsightsOutputSchema},
   prompt: `You are an expert agronomist providing insights and recommendations for crop management.
 
-  Based on the provided crop photo and environmental data, provide specific recommendations for irrigation, fertilization, and pest control.
+  Based on the provided crop photo and detailed sensor data, provide specific recommendations for irrigation, fertilization, and pest control.
 
   Crop Photo: {{media url=cropPhotoDataUri}}
-  Environmental Data: {{{environmentalData}}}
+  
+  Sensor Data:
+  - Temperature: {{{temperature}}}°C
+  - Humidity: {{{humidity}}}%
+  - Soil pH: {{{ph}}}
+  - Soil Moisture: {{{soilMoisture}}}%
+  - CO2 Level: {{{co2}}} ppm
+  - Nitrogen (N): {{{nitrogen}}}
+  - Phosphorus (P): {{{phosphorus}}}
+  - Potassium (K): {{{potassium}}}
 
   Consider the following factors when generating your recommendations:
-  - Crop health and appearance from the photo
-  - Environmental conditions (humidity, temperature, etc.)
-  - Best practices for the specific crop type (if identifiable from the photo)
+  - Crop health and appearance from the photo.
+  - The detailed environmental and soil conditions from the sensor data.
+  - Best practices for the specific crop type (if identifiable from the photo).
 
-  Format your recommendations clearly and concisely.
+  Format your recommendations to be clear, concise, and actionable for a farmer.
   `,
 });
 

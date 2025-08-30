@@ -16,6 +16,12 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/web
 const schema = z.object({
   temperature: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(-50).max(100),
   humidity: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0).max(100),
+  ph: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0).max(14),
+  soilMoisture: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0).max(100),
+  co2: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0),
+  nitrogen: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0),
+  phosphorus: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0),
+  potassium: z.coerce.number({invalid_type_error: "Please enter a valid number."}).min(0),
   cropPhoto: z
     .instanceof(File)
     .refine((file) => file.size > 0, "Crop photo is required.")
@@ -44,26 +50,31 @@ export async function getNewInsights(
     const validatedFields = schema.safeParse({
         temperature: formData.get('temperature'),
         humidity: formData.get('humidity'),
+        ph: formData.get('ph'),
+        soilMoisture: formData.get('soilMoisture'),
+        co2: formData.get('co2'),
+        nitrogen: formData.get('nitrogen'),
+        phosphorus: formData.get('phosphorus'),
+        potassium: formData.get('potassium'),
         cropPhoto: formData.get('cropPhoto'),
     });
 
     if (!validatedFields.success) {
         return {
-            message: "Validation failed.",
+            message: "Validation failed. Please check the form for errors.",
             insights: null,
             fieldErrors: validatedFields.error.flatten().fieldErrors,
         };
     }
     
-    const { temperature, humidity, cropPhoto } = validatedFields.data;
+    const { cropPhoto, ...sensorData } = validatedFields.data;
 
     try {
         const cropPhotoDataUri = await fileToDataUri(cropPhoto);
-        const environmentalData = `Temperature: ${temperature}°C, Humidity: ${humidity}%`;
         
         const insights = await generateCropInsights({
             cropPhotoDataUri,
-            environmentalData,
+            ...sensorData,
         });
 
         return {

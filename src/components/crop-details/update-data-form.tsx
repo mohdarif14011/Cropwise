@@ -1,7 +1,6 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
-import { useActionState } from 'react';
+import { useFormStatus, useActionState } from 'react';
 import { getNewInsights, type FormState } from '@/app/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -12,6 +11,8 @@ import { AlertCircle, Bot, UploadCloud } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import type { Insight } from '@/lib/types';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -67,7 +68,7 @@ export default function UpdateDataForm({ onNewInsights }: UpdateDataFormProps) {
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">Update Data</CardTitle>
-        <CardDescription>Upload a new photo and current environmental data to get the latest AI insights.</CardDescription>
+        <CardDescription>Upload a new photo and current sensor data to get the latest AI insights.</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-4">
@@ -98,7 +99,48 @@ export default function UpdateDataForm({ onNewInsights }: UpdateDataFormProps) {
               <Input id="humidity" name="humidity" type="number" step="1" placeholder="e.g. 60" />
               {state.fieldErrors?.humidity && <p className="text-sm font-medium text-destructive">{state.fieldErrors.humidity[0]}</p>}
             </div>
+            <div className="space-y-2">
+                <Label htmlFor="ph">Soil pH</Label>
+                <Input id="ph" name="ph" type="number" step="0.1" placeholder="e.g. 6.5" />
+                {state.fieldErrors?.ph && <p className="text-sm font-medium text-destructive">{state.fieldErrors.ph[0]}</p>}
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="soilMoisture">Soil Moisture (%)</Label>
+                <Input id="soilMoisture" name="soilMoisture" type="number" step="1" placeholder="e.g. 50" />
+                {state.fieldErrors?.soilMoisture && <p className="text-sm font-medium text-destructive">{state.fieldErrors.soilMoisture[0]}</p>}
+            </div>
+             <div className="space-y-2">
+                <Label htmlFor="co2">CO2 (ppm)</Label>
+                <Input id="co2" name="co2" type="number" step="1" placeholder="e.g. 400" />
+                {state.fieldErrors?.co2 && <p className="text-sm font-medium text-destructive">{state.fieldErrors.co2[0]}</p>}
+            </div>
           </div>
+          
+           <Collapsible>
+                <CollapsibleTrigger className='flex items-center gap-1 text-sm font-medium'>
+                    NPK Values
+                    <ChevronDown className="h-4 w-4" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-4 space-y-4">
+                     <div className="grid grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="nitrogen">Nitrogen (N)</Label>
+                            <Input id="nitrogen" name="nitrogen" type="number" step="1" placeholder="e.g. 100" />
+                             {state.fieldErrors?.nitrogen && <p className="text-sm font-medium text-destructive">{state.fieldErrors.nitrogen[0]}</p>}
+                        </div>
+                         <div className="space-y-2">
+                            <Label htmlFor="phosphorus">Phosphorus (P)</Label>
+                            <Input id="phosphorus" name="phosphorus" type="number" step="1" placeholder="e.g. 50" />
+                             {state.fieldErrors?.phosphorus && <p className="text-sm font-medium text-destructive">{state.fieldErrors.phosphorus[0]}</p>}
+                        </div>
+                         <div className="space-y-2">
+                            <Label htmlFor="potassium">Potassium (K)</Label>
+                            <Input id="potassium" name="potassium" type="number" step="1" placeholder="e.g. 75" />
+                             {state.fieldErrors?.potassium && <p className="text-sm font-medium text-destructive">{state.fieldErrors.potassium[0]}</p>}
+                        </div>
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
           
           <SubmitButton />
 

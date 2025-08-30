@@ -1,6 +1,8 @@
+
 'use client';
 
-import { useFormStatus, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
+import { useActionState, useEffect, useState, useRef } from 'react';
 import { getNewInsights, type FormState } from '@/app/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -8,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Bot, UploadCloud } from 'lucide-react';
-import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import type { Insight } from '@/lib/types';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';

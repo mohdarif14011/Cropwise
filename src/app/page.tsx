@@ -201,14 +201,6 @@ export default function MobileHomePage() {
             <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
         </div>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/60" />
-          <Input
-            placeholder="Search here..."
-            className="bg-white/20 border-none rounded-full pl-10 placeholder:text-primary-foreground/60 text-primary-foreground focus-visible:ring-offset-0 focus-visible:ring-2 focus-visible:ring-white/50"
-          />
-          <Mic className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/60" />
-        </div>
       </header>
 
       <main className="flex-1 p-4 space-y-6">

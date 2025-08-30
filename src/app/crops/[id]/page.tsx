@@ -1,10 +1,12 @@
 import { getCropById } from '@/lib/mock-data';
 import { notFound } from 'next/navigation';
-import { AppLayout } from '@/components/layout/app-layout';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import HistoricalDataChart from '@/components/crop-details/historical-data-chart';
 import CropDetailsClient from '@/components/crop-details/crop-details-client';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function CropDetailPage({ params }: { params: { id: string } }) {
   const crop = getCropById(params.id);
@@ -14,14 +16,21 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <AppLayout>
+    <div>
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-        <div className="flex items-start justify-between space-y-2">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight font-headline">
-              {crop.name}
-            </h1>
-            <p className="text-muted-foreground">{crop.variety}</p>
+       <div className="flex items-start justify-between space-y-2">
+          <div className='flex items-center gap-2'>
+            <Button asChild variant="ghost" size="icon">
+                <Link href="/">
+                    <ArrowLeft />
+                </Link>
+            </Button>
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight font-headline">
+                {crop.name}
+                </h1>
+                <p className="text-muted-foreground">{crop.variety}</p>
+            </div>
           </div>
         </div>
 
@@ -55,6 +64,6 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-    </AppLayout>
+    </div>
   );
 }

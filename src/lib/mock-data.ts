@@ -1,0 +1,65 @@
+import type { Crop } from './types';
+
+export const mockCrops: Crop[] = [
+  {
+    id: 'corn-1',
+    name: 'Corn',
+    variety: 'Golden Bantam',
+    imageUrl: 'https://picsum.photos/600/400',
+    lastUpdated: '2024-07-29',
+    insights: {
+      irrigationRecommendation: 'Water every 2-3 days, ensuring deep soil moisture. Increase frequency during pollination.',
+      fertilizationRecommendation: 'Apply a balanced NPK fertilizer (10-10-10) at planting. Sidedress with nitrogen when plants are knee-high.',
+      pestControlRecommendation: 'Monitor for corn earworms. Apply mineral oil to silks or use Bacillus thuringiensis (Bt) if necessary.',
+    },
+    historicalData: [
+      { date: '2024-07-01', temperature: 25, humidity: 60, health: 85 },
+      { date: '2024-07-08', temperature: 26, humidity: 62, health: 88 },
+      { date: '2024-07-15', temperature: 28, humidity: 58, health: 90 },
+      { date: '2024-07-22', temperature: 27, humidity: 65, health: 92 },
+      { date: '2024-07-29', temperature: 29, humidity: 63, health: 91 },
+    ],
+  },
+  {
+    id: 'tomato-1',
+    name: 'Tomato',
+    variety: 'Roma',
+    imageUrl: 'https://picsum.photos/600/401',
+    lastUpdated: '2024-07-28',
+    insights: {
+      irrigationRecommendation: 'Provide consistent watering, about 1-1.5 inches per week. Avoid overhead watering to prevent fungal diseases.',
+      fertilizationRecommendation: 'Use a low-nitrogen, high-phosphorus fertilizer (e.g., 5-10-5) when transplanting and as fruit begins to form.',
+      pestControlRecommendation: 'Check for hornworms and aphids. Handpick hornworms or use neem oil for aphids.',
+    },
+    historicalData: [
+      { date: '2024-07-01', temperature: 24, humidity: 70, health: 80 },
+      { date: '2024-07-08', temperature: 25, humidity: 68, health: 82 },
+      { date: '2024-07-15', temperature: 26, humidity: 72, health: 85 },
+      { date: '2024-07-22', temperature: 25, humidity: 75, health: 83 },
+      { date: '2024-07-28', temperature: 27, humidity: 71, health: 86 },
+    ],
+  },
+  {
+    id: 'lettuce-1',
+    name: 'Lettuce',
+    variety: 'Romaine',
+    imageUrl: 'https://picsum.photos/600/402',
+    lastUpdated: '2024-07-30',
+    insights: {
+      irrigationRecommendation: 'Keep soil consistently moist but not waterlogged. Light, frequent watering is best for shallow roots.',
+      fertilizationRecommendation: 'Feed with a balanced liquid fertilizer (e.g., 10-10-10) every 2-3 weeks.',
+      pestControlRecommendation: 'Watch for slugs and aphids. Use beer traps for slugs and insecticidal soap for aphids.',
+    },
+    historicalData: [
+        { date: '2024-07-01', temperature: 20, humidity: 75, health: 90 },
+        { date: '2024-07-08', temperature: 22, humidity: 73, health: 92 },
+        { date: '2024-07-15', temperature: 21, humidity: 78, health: 89 },
+        { date: '2024-07-22', temperature: 23, humidity: 76, health: 94 },
+        { date: '2024-07-30', temperature: 22, humidity: 77, health: 95 },
+    ],
+  },
+];
+
+export const getCropById = (id: string): Crop | undefined => {
+    return mockCrops.find(crop => crop.id === id);
+}

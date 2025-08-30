@@ -27,6 +27,7 @@ import AddFieldDialog from '@/components/add-field-dialog';
 import { useEffect, useState, useCallback } from 'react';
 import { getWeather, type WeatherData } from '@/ai/flows/get-weather-flow';
 import { Skeleton } from '@/components/ui/skeleton';
+import { format } from 'date-fns';
 
 interface WeatherCardProps {
     weather: WeatherData | null;
@@ -150,6 +151,8 @@ export default function MobileHomePage() {
     fetchWeather();
   }, [fetchWeather]);
 
+  const currentDate = format(new Date(), 'EEEE, dd MMM yyyy');
+
   return (
     <div className="min-h-screen bg-background text-foreground font-body flex flex-col">
       <header className="bg-primary text-primary-foreground p-6 rounded-b-3xl">
@@ -157,7 +160,7 @@ export default function MobileHomePage() {
           <div>
             <h1 className="text-2xl font-bold">Hello, Farmers</h1>
             <div className="flex items-center text-sm opacity-80">
-              <span>Sunday, 01 Dec 2024</span>
+              <span>{currentDate}</span>
               <ChevronDown className="h-4 w-4" />
             </div>
           </div>

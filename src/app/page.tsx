@@ -48,7 +48,7 @@ function WeatherCard({ weather, isLoading }: WeatherCardProps) {
     }
 
     return (
-        <Card className="shadow-lg rounded-2xl -mt-16 z-10 relative">
+        <Card className="shadow-lg rounded-2xl -mt-12 z-10 relative">
             <CardContent className="p-4">
             <div className="flex justify-between items-start mb-2">
               <div className="flex items-center gap-2">
@@ -99,7 +99,7 @@ function WeatherCard({ weather, isLoading }: WeatherCardProps) {
 
 function WeatherCardSkeleton() {
     return (
-        <Card className="shadow-lg rounded-2xl -mt-16 z-10 relative">
+        <Card className="shadow-lg rounded-2xl -mt-12 z-10 relative">
             <CardContent className="p-4">
                  <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2">
@@ -203,7 +203,7 @@ export default function MobileHomePage() {
         </div>
       </header>
 
-      <main className="flex-1 p-4 space-y-6">
+      <main className="flex-1 p-4 space-y-4">
         <WeatherCard weather={weather} isLoading={isLoading} />
 
         <section>

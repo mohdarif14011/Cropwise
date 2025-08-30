@@ -28,6 +28,9 @@ import { useEffect, useState, useCallback } from 'react';
 import { getWeather, type WeatherData } from '@/ai/flows/get-weather-flow';
 import { Skeleton } from '@/components/ui/skeleton';
 import { format } from 'date-fns';
+import { mockCrops } from '@/lib/mock-data';
+import type { Crop } from '@/lib/types';
+import { Progress } from '@/components/ui/progress';
 
 interface WeatherCardProps {
     weather: WeatherData | null;
@@ -130,6 +133,44 @@ function WeatherCardSkeleton() {
     )
 }
 
+function MyFieldCard({ crop }: { crop: Crop }) {
+  const latestHealth = crop.historicalData[crop.historicalData.length - 1]?.health || 0;
+  
+  const getHealthColor = (health: number) => {
+    if (health < 50) return 'bg-red-500';
+    if (health < 80) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
+
+  return (
+    <Link href={`/crops/${crop.id}`}>
+      <Card className="overflow-hidden rounded-2xl shadow-lg">
+        <div className="relative h-40 w-full">
+          <Image
+            src={crop.imageUrl}
+            alt={crop.name}
+            fill
+            className="object-cover"
+            data-ai-hint="field aerial view"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+        <CardContent className="p-4 bg-card">
+          <h3 className="font-bold text-lg">Tuscan Sun Vineyard</h3>
+          <p className="text-sm text-muted-foreground">{crop.name} - {crop.variety}</p>
+          <div className="mt-3">
+            <div className="flex justify-between items-center mb-1">
+                <span className="text-xs font-medium text-muted-foreground">Overall Health</span>
+                <span className={`text-sm font-bold ${getHealthColor(latestHealth).replace('bg-', 'text-')}`}>{latestHealth}%</span>
+            </div>
+            <Progress value={latestHealth} indicatorClassName={getHealthColor(latestHealth)} />
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+}
+
 
 export default function MobileHomePage() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -152,6 +193,7 @@ export default function MobileHomePage() {
   }, [fetchWeather]);
 
   const currentDate = format(new Date(), 'EEEE, dd MMM yyyy');
+  const firstCrop = mockCrops[1]; // Using tomato crop for the card
 
   return (
     <div className="min-h-screen bg-background text-foreground font-body flex flex-col">
@@ -183,22 +225,7 @@ export default function MobileHomePage() {
 
         <section>
           <h2 className="text-xl font-bold mb-3">My Fields</h2>
-           <Link href="/crops/tomato-1">
-              <Card className="overflow-hidden rounded-2xl shadow-lg">
-                <div className="relative h-48 w-full">
-                  <Image
-                    src="https://picsum.photos/600/300"
-                    alt="My Field"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="field aerial view"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                    <h3 className="text-white text-lg font-bold">Tuscan Sun Vineyard</h3>
-                  </div>
-                </div>
-              </Card>
-           </Link>
+           {firstCrop && <MyFieldCard crop={firstCrop} />}
         </section>
       </main>
 

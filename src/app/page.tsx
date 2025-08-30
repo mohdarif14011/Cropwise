@@ -12,8 +12,9 @@ import {
   Thermometer,
   CloudRain,
   Home,
-  MessageSquare,
-  User,
+  ShoppingBasket,
+  Briefcase,
+  Newspaper,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -114,17 +115,21 @@ export default function MobileHomePage() {
 
       <footer className="sticky bottom-0 px-6 pb-4 z-20">
         <div className="flex justify-around items-center bg-gray-900 text-white h-16 rounded-full shadow-lg">
-          <Link href="#" className="p-3 text-primary">
+          <Link href="#" className="p-3 text-primary flex flex-col items-center gap-1">
             <Home className="h-6 w-6" />
+            <span className="text-xs">Home</span>
           </Link>
-          <Link href="#" className="p-3">
-            <Cloud className="h-6 w-6" />
+          <Link href="#" className="p-3 flex flex-col items-center gap-1">
+            <ShoppingBasket className="h-6 w-6" />
+            <span className="text-xs">Products</span>
           </Link>
-          <Link href="#" className="p-3">
-            <MessageSquare className="h-6 w-6" />
+          <Link href="#" className="p-3 flex flex-col items-center gap-1">
+            <Briefcase className="h-6 w-6" />
+            <span className="text-xs">Services</span>
           </Link>
-          <Link href="#" className="p-3">
-            <User className="h-6 w-6" />
+          <Link href="#" className="p-3 flex flex-col items-center gap-1">
+            <Newspaper className="h-6 w-6" />
+            <span className="text-xs">Blogs</span>
           </Link>
         </div>
       </footer>
